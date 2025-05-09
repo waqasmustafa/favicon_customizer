@@ -5,11 +5,11 @@
         <field name="model">res.company</field>
         <field name="inherit_id" ref="base.view_company_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//page[@name='social_media']" position="after">
-                <page string="Favicon Settings">
-                    <group string="Custom Favicon">
-                        <field name="favicon" widget="image" class="oe_avatar" 
-                            options="{'size': [256, 256]}"/>
+            <!-- Changed XPath to target a more reliable element -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Favicon">
+                    <group>
+                        <field name="favicon" widget="image" class="oe_avatar"/>
                         <label for="favicon" string="Recommended size: 16x16 or 32x32 pixels"/>
                     </group>
                 </page>

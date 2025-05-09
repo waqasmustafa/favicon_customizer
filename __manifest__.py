@@ -1,13 +1,13 @@
 {
     'name': 'Favicon Customizer',
-    'version': '1.0',
-    'summary': 'Allows custom favicon upload for company',
+    'version': '1.0.1',
+    'summary': 'Custom Favicon for Odoo Backend',
     'description': """
-        This module allows companies to upload their own favicon
-        which will replace the default Odoo favicon across all interfaces.
+        Allows companies to upload their own favicon that replaces
+        the default Odoo favicon across all backend interfaces.
     """,
     'author': 'Waqas Mustafa',
-    'website': 'https://ippbx.com',
+    'website': 'https://yourwebsite.com',
     'category': 'Tools',
     'depends': ['base', 'web'],
     'data': [
