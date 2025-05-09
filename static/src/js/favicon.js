@@ -1,36 +1,38 @@
-odoo.define('favicon_customizer.favicon', function (require) {
-    "use strict";
+/** @odoo-module **/
 
-    var session = require('web.session');
-    var ajax = require('web.ajax');
+import { session } from "@web/session";
+import { registry } from "@web/core/registry";
+import { url } from "@web/core/utils/urls";
 
-    function updateFavicon() {
-        var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-        link.type = 'image/x-icon';
-        link.rel = 'shortcut icon';
-        
-        if (session.company_id) {
-            ajax.jsonRpc('/web/image', 'call', {
-                model: 'res.company',
-                id: session.company_id,
-                field: 'favicon',
-            }).then(function(url) {
-                if (url) {
-                    link.href = url;
-                } else {
-                    link.href = '/web/static/img/favicon.ico';
-                }
-                document.head.appendChild(link);
-            });
-        } else {
-            link.href = '/web/static/img/favicon.ico';
+const serviceRegistry = registry.category("services");
+
+const faviconService = {
+    dependencies: ["company"],
+    
+    start(env, { company }) {
+        function updateFavicon() {
+            const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+            link.type = 'image/x-icon';
+            link.rel = 'shortcut icon';
+            
+            if (company.currentCompany.favicon) {
+                link.href = url('/web/image', {
+                    model: 'res.company',
+                    id: company.currentCompany.id,
+                    field: 'favicon',
+                });
+            } else {
+                link.href = '/web/static/img/favicon.ico';
+            }
             document.head.appendChild(link);
         }
+
+        // Initial update
+        updateFavicon();
+
+        // Update when company changes
+        company.on("update", updateFavicon);
     }
+};
 
-    // Initial update
-    updateFavicon();
-
-    // Update when company changes
-    session.on('session_bind', updateFavicon);
-});
+serviceRegistry.add("favicon_service", faviconService);
