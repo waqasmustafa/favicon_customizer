@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_company_view_form_inherit" model="ir.ui.view">
+        <field name="name">res.company.form.inherit.favicon</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='social_media']" position="after">
+                <page string="Favicon Settings">
+                    <group string="Custom Favicon">
+                        <field name="favicon" widget="image" class="oe_avatar" 
+                            options="{'size': [256, 256]}"/>
+                        <label for="favicon" string="Recommended size: 16x16 or 32x32 pixels"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
